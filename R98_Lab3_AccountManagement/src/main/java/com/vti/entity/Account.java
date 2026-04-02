@@ -3,8 +3,6 @@ package com.vti.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -40,7 +38,6 @@ public class Account implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "DepartmentID", nullable = false)
-	@Cascade(value = { CascadeType.REMOVE, CascadeType.SAVE_UPDATE })
 	private Department department;
 
 	@ManyToOne

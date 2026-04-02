@@ -1,21 +1,13 @@
 package com.vti.dto;
 
-public class DepartmentDto {
+public class PossitonDto {
 	private short id;
 
 	private String name;
 
-	public DepartmentDto() {
+	public PossitonDto() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public short getId() {
@@ -24,6 +16,14 @@ public class DepartmentDto {
 
 	public void setId(short id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

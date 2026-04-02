@@ -32,6 +32,7 @@ public class DepartmentController {
 		List<DepartmentDto> listdeDepartmentDtos = new ArrayList<>();
 		for (Department department : listDepartments) {
 			DepartmentDto departmentDto = new DepartmentDto();
+			departmentDto.setId(department.getId());
 			departmentDto.setName(department.getName());
 			listdeDepartmentDtos.add(departmentDto);
 		}
