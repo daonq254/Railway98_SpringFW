@@ -25,8 +25,14 @@ public class AccountSpecification implements Specification<Account> {
 	public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 		// TODO Auto-generated method stub
 		if (operator.equalsIgnoreCase("LIKE")) {
-			return criteriaBuilder.like(root.get(field), "%" + value.toString() + "%");
-		} else {
+			if (field.equalsIgnoreCase("department")) {
+				return criteriaBuilder.like(root.get(field).get("name"), "%" + value.toString() + "%");
+			} else {
+				return criteriaBuilder.like(root.get(field), "%" + value.toString() + "%");
+			}
+		}
+
+		if (operator.equalsIgnoreCase(">")) {
 
 		}
 		return null;

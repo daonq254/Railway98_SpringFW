@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -39,8 +43,9 @@ public class AccountService implements IAccountService {
 		if (!StringUtils.isEmpty(search)) {
 			AccountSpecification fullnameSpecification = new AccountSpecification("fullname", "LIKE", search);
 			AccountSpecification emailSpecification = new AccountSpecification("email", "LIKE", search);
-//			AccountSpecification departmentSpecification = new AccountSpecification("department", "LIKE", search);
-			where = Specification.where(fullnameSpecification).or(emailSpecification);
+			AccountSpecification departmentSpecification = new AccountSpecification("department", "LIKE", search);
+
+			where = Specification.where(fullnameSpecification).or(emailSpecification).or(departmentSpecification);
 		}
 
 		return accountRepository.findAll(where, pageable);
@@ -94,6 +99,16 @@ public class AccountService implements IAccountService {
 		return accountRepository.findByEmail(email)
 				.orElseThrow(() -> new IllegalArgumentException("Account not found with email = " + email));
 
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Account account_db = accountRepository.findByUsername(username);
+		if (account_db == null) {
+			throw new UsernameNotFoundException(username);
+		}
+
+		return new User(account_db.getUsername(), account_db.getPassword(), AuthorityUtils.createAuthorityList("user"));
 	}
 
 }
