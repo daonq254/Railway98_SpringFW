@@ -114,7 +114,8 @@ public class AccountService implements IAccountService {
 			throw new UsernameNotFoundException(username);
 		}
 
-		return new User(account_db.getUsername(), account_db.getPassword(), AuthorityUtils.createAuthorityList("user"));
+		return new User(account_db.getUsername(), account_db.getPassword(),
+				AuthorityUtils.createAuthorityList("ROLE_" + account_db.getRole()));
 	}
 
 	@Override
@@ -129,7 +130,7 @@ public class AccountService implements IAccountService {
 		account.setDepartment(department);
 		account.setPosition(position);
 		account.setPassword(passwordEncoder.encode(form.getPassword())); // 123456 ==> mã hóa
-
+		account.setRole("USER");
 		accountRepository.save(account);
 	}
 
