@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Position", catalog = "TestingSystem")
+@Table(name = "Position", catalog = "TestingSystem_R98")
 public class Position implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Column(name = "PositionID")

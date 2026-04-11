@@ -3,6 +3,7 @@ package com.vti.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +24,26 @@ public class DepartmentController {
 	@Autowired
 	private IDepartmentService departmentService;
 
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@GetMapping()
 	public ResponseEntity<?> getAllDepartments() {
 //		Danh sách phòng ban API cho FE
 		List<Department> listDepartments = departmentService.getAllDepartments();
 
 //		DTO: Data Transfer Object: department(id, name)  ==> departmentDTO(name)
-		List<DepartmentDto> listdeDepartmentDtos = new ArrayList<>();
+		List<DepartmentDto> listDepartmentDtos = new ArrayList<>();
 		for (Department department : listDepartments) {
-			DepartmentDto departmentDto = new DepartmentDto();
-			departmentDto.setId(department.getId());
-			departmentDto.setName(department.getName());
-			listdeDepartmentDtos.add(departmentDto);
+
+//			DepartmentDto departmentDto = new DepartmentDto();
+//			departmentDto.setId(department.getId());
+//			departmentDto.setName(department.getName());
+//			
+			DepartmentDto departmentDto = modelMapper.map(department, DepartmentDto.class);
+
+			listDepartmentDtos.add(departmentDto);
 		}
-		return new ResponseEntity<>(listdeDepartmentDtos, HttpStatus.OK);
+		return new ResponseEntity<>(listDepartmentDtos, HttpStatus.OK);
 	}
 }
